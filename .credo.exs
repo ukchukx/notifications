@@ -23,7 +23,7 @@
         #
         included: [
           "lib/",
-          "test/",
+          "test/"
         ],
         excluded: [~r"/_build/", ~r"/deps/", ~r"/.elixir_ls/"]
       },
