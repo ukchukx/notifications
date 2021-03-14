@@ -2,12 +2,14 @@ defmodule Notifications.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
+  alias Notifications.Metrics.Setup
+  alias Notifications.Web.Endpoint
 
   use Application
 
   def start(_type, _args) do
     Confex.resolve_env!(:notifications)
-    Notifications.Metrics.Setup.setup()
+    Setup.setup()
 
     children = [
       # Start the Telemetry supervisor
@@ -15,7 +17,7 @@ defmodule Notifications.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Notifications.PubSub},
       # Start the Endpoint (http/https)
-      Notifications.Web.Endpoint,
+      Endpoint,
       {Notifications.Boundary.JobManager, []}
       # Start a worker by calling: Notifications.Worker.start_link(arg)
       # {Notifications.Worker, arg}
@@ -30,7 +32,7 @@ defmodule Notifications.Application do
   # Tell Phoenix to update the endpoint configuration
   # whenever the application is updated.
   def config_change(changed, _new, removed) do
-    Notifications.Web.Endpoint.config_change(changed, removed)
+    Endpoint.config_change(changed, removed)
     :ok
   end
 end

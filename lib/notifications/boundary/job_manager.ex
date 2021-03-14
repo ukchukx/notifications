@@ -1,8 +1,8 @@
 defmodule Notifications.Boundary.JobManager do
   @moduledoc false
 
-  alias Notifications.Core.Job
   alias Notifications.Boundary.SendNotification
+  alias Notifications.Core.Job
 
   use GenServer
   require Logger
@@ -11,13 +11,11 @@ defmodule Notifications.Boundary.JobManager do
     GenServer.call(__MODULE__, {:remove, id})
   end
 
-  def add_job(%Job{} = job) do
+  def add_job(job = %Job{}) do
     GenServer.call(__MODULE__, {:add, job})
   end
 
-  def state() do
-    GenServer.call(__MODULE__, :state)
-  end
+  def state, do: GenServer.call(__MODULE__, :state)
 
   def start_link(_) do
     GenServer.start_link(__MODULE__, %{}, name: __MODULE__, hibernate_after: 5_000)
@@ -54,7 +52,7 @@ defmodule Notifications.Boundary.JobManager do
     {:noreply, state}
   end
 
-  defp schedule_send(%Job{id: id, max_delay: delay} = _job) do
+  defp schedule_send(_job = %Job{id: id, max_delay: delay}) do
     Process.send_after(self(), {:send, id}, delay * 1000)
   end
 end

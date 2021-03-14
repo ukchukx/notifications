@@ -28,3 +28,4 @@ notifications-*.tar
 /priv/static/
 .elixir_ls
 .env*
+/priv/plts/
