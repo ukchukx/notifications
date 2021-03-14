@@ -7,7 +7,7 @@ agent:
 
 auto_cancel:
   running:
-    when: "$SEMAPHORE_GIT_BRANCH == 'master'"
+    when: "branch != 'develop'"
 
 blocks:
   - name: Check master
