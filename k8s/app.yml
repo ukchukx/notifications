@@ -1,0 +1,116 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notifications
+  namespace: notifications
+  labels:
+    app: notifications
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notifications
+  template:
+    metadata:
+      labels:
+        app: notifications
+    spec:
+      imagePullSecrets:
+      - name: headless-commerce-package-access-token
+      containers:
+      - name: notifications
+        image: ghcr.io/headless-commerce/notifications
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 4000
+        readinessProbe:
+          httpGet:
+            path: /health/ready
+            port: 4000
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        livenessProbe:
+          httpGet:
+            path: /health/live
+            port: 4000
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        env:
+        - name: NOTIFICATIONS_HOSTNAME
+          value: 'notifications.moview.com.ng'
+        - name: NOTIFICATIONS_PORT
+          value: '4000'
+        - name: NOTIFICATIONS_SENDINBLUE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: notifications-secrets
+              key: sendinblueApiKey
+        - name: NOTIFICATIONS_ACCESS_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: notifications-secrets
+              key: accessToken
+        - name: NOTIFICATIONS_SECRET_KEY_BASE
+          valueFrom:
+            secretKeyRef:
+              name: notifications-secrets
+              key: secretKeyBase
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: notifications
+  namespace: notifications
+spec:
+  ports:
+  - name: web
+    port: 80
+    targetPort: 4000
+  selector:
+    app: notifications
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: notifications-web
+  namespace: notifications
+spec:
+  entryPoints:
+    - web
+  routes:
+  - kind: Rule
+    match: Host(`notifications.moview.com.ng`)
+    services:
+    - name: notifications
+      port: 80
+    middlewares:
+    - name: security
+      namespace: default
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: notifications-web-tls
+  namespace: notifications
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - kind: Rule
+    match: Host(`notifications.moview.com.ng`)
+    services:
+    - name: notifications
+      port: 80
+    middlewares:
+    - name: security
+      namespace: default
+  tls:
+    certResolver: le
+    domains:
+    - main: "moview.com.ng"
+      sans:
+      - "*.moview.com.ng"
+    options:
+      name: mytlsoption
+      namespace: default
