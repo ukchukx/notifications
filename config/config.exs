@@ -22,7 +22,7 @@ config :notifications, Notifications.Web.Endpoint,
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
-  metadata: :all
+  metadata: [:request_id, :job_id]
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
@@ -30,9 +30,12 @@ config :phoenix, :json_library, Jason
 config :cors_plug,
   methods: ["GET", "POST"]
 
-config :sample, Sample.Mailer,
-  adapter: Swoosh.Adapters.Sendinblue,
-  api_key: {:system, "NOTIFICATIONS_SENDINBLUE_API_KEY"}
+config :notifications, Notifications.Mailer,
+  adapter: Swoosh.Adapters.Gmail,
+  access_token: {:system, "NOTIFICATIONS_GMAIL_ACCESS_TOKEN"}
+
+config :notifications,
+  api_key: {:system, "NOTIFICATIONS_API_KEY"}
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

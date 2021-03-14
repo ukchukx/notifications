@@ -15,7 +15,8 @@ defmodule Notifications.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Notifications.PubSub},
       # Start the Endpoint (http/https)
-      Notifications.Web.Endpoint
+      Notifications.Web.Endpoint,
+      {Notifications.Boundary.JobManager, []}
       # Start a worker by calling: Notifications.Worker.start_link(arg)
       # {Notifications.Worker, arg}
     ]
