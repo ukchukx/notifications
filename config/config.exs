@@ -31,11 +31,11 @@ config :cors_plug,
   methods: ["GET", "POST"]
 
 config :notifications, Notifications.Mailer,
-  adapter: Swoosh.Adapters.Gmail,
-  access_token: {:system, "NOTIFICATIONS_GMAIL_ACCESS_TOKEN"}
+  adapter: Swoosh.Adapters.Sendinblue,
+  access_token: {:system, "NOTIFICATIONS_SENDINBLUE_API_KEY"}
 
 config :notifications,
-  api_key: {:system, "NOTIFICATIONS_API_KEY"}
+  access_token: {:system, "NOTIFICATIONS_ACCESS_TOKEN"}
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

@@ -17,5 +17,11 @@ defmodule Notifications do
     email
     |> Job.new(max_delay: max_delay)
     |> JobManager.add_job
+
+    :ok
+  end
+
+  def send_notification(_data) do
+    :unsupported_type
   end
 end
