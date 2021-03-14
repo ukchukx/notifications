@@ -47,6 +47,7 @@ defmodule Notifications.MixProject do
       {:phoenix_live_dashboard, "~> 0.3 or ~> 0.2.9"},
       {:gettext, "~> 0.11"},
       {:hackney, "~> 1.17"},
+      {:healthchex, "~> 0.2"},
       {:jason, "~> 1.0"},
       {:mail, ">= 0.0.0"},
       {:plug_cowboy, "~> 2.0"},

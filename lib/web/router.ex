@@ -2,6 +2,9 @@ defmodule Notifications.Web.Router do
   alias Notifications.Web
   use Web, :router
 
+  forward "/health/live", Healthchex.Probes.Liveness
+  forward "/health/ready", Healthchex.Probes.Readiness
+
   pipeline :api do
     plug :accepts, ["json"]
     plug Plug.Telemetry, event_prefix: [:notifications, :plug]
