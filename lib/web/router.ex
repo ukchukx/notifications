@@ -1,11 +1,11 @@
-defmodule NotificationsWeb.Router do
-  use NotificationsWeb, :router
+defmodule Notifications.Web.Router do
+  use Notifications.Web, :router
 
   pipeline :api do
     plug :accepts, ["json"]
   end
 
-  scope "/api", NotificationsWeb do
+  scope "/api", Notifications.Web do
     pipe_through :api
   end
 
@@ -21,7 +21,7 @@ defmodule NotificationsWeb.Router do
 
     scope "/" do
       pipe_through [:fetch_session, :protect_from_forgery]
-      live_dashboard "/dashboard", metrics: NotificationsWeb.Telemetry
+      live_dashboard "/dashboard", metrics: Notifications.Web.Telemetry
     end
   end
 end

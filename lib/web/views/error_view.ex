@@ -1,5 +1,5 @@
-defmodule NotificationsWeb.ErrorView do
-  use NotificationsWeb, :view
+defmodule Notifications.Web.ErrorView do
+  use Notifications.Web, :view
 
   # If you want to customize a particular status code
   # for a certain format, you may uncomment below.

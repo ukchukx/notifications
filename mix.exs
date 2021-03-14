@@ -34,13 +34,21 @@ defmodule Notifications.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:confex, "~> 3.4.0"},
+      {:cors_plug, "~> 2.0"},
       {:phoenix, "~> 1.5.6"},
       {:phoenix_live_dashboard, "~> 0.3 or ~> 0.2.9"},
       {:telemetry_metrics, "~> 0.4"},
       {:telemetry_poller, "~> 0.4"},
       {:gettext, "~> 0.11"},
+      {:hackney, "~> 1.17"},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:prometheus_ex, "~> 3.0"},
+      {:prometheus_plugs, "~> 1.1"},
+      {:swoosh, "~> 1.3"},
+      {:telemetry_metrics, "~> 0.4"},
+      {:telemetry_poller, "~> 0.4"}
     ]
   end
 

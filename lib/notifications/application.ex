@@ -6,13 +6,16 @@ defmodule Notifications.Application do
   use Application
 
   def start(_type, _args) do
+    Confex.resolve_env!(:notifications)
+    Notifications.Metrics.Setup.setup()
+
     children = [
       # Start the Telemetry supervisor
-      NotificationsWeb.Telemetry,
+      Notifications.Web.Telemetry,
       # Start the PubSub system
       {Phoenix.PubSub, name: Notifications.PubSub},
       # Start the Endpoint (http/https)
-      NotificationsWeb.Endpoint
+      Notifications.Web.Endpoint
       # Start a worker by calling: Notifications.Worker.start_link(arg)
       # {Notifications.Worker, arg}
     ]
@@ -26,7 +29,7 @@ defmodule Notifications.Application do
   # Tell Phoenix to update the endpoint configuration
   # whenever the application is updated.
   def config_change(changed, _new, removed) do
-    NotificationsWeb.Endpoint.config_change(changed, removed)
+    Notifications.Web.Endpoint.config_change(changed, removed)
     :ok
   end
 end

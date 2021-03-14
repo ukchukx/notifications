@@ -1,4 +1,4 @@
-defmodule NotificationsWeb.Endpoint do
+defmodule Notifications.Web.Endpoint do
   use Phoenix.Endpoint, otp_app: :notifications
 
   # The session will be stored in the cookie and signed,
@@ -10,7 +10,7 @@ defmodule NotificationsWeb.Endpoint do
     signing_salt: "1XhQQ7VM"
   ]
 
-  socket "/socket", NotificationsWeb.UserSocket,
+  socket "/socket", Notifications.Web.UserSocket,
     websocket: true,
     longpoll: false
 
@@ -47,5 +47,6 @@ defmodule NotificationsWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
-  plug NotificationsWeb.Router
+  plug CORSPlug
+  plug Notifications.Web.Router
 end
