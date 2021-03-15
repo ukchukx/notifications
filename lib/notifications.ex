@@ -5,13 +5,21 @@ defmodule Notifications do
   alias Notifications.Core.Job.Email
 
   def send_notification(data = %{"type" => "email", "params" => %{}}) do
+    html_text = get_in(data, ["params", "html"])
+
+    plain_text =
+      case get_in(data, ["params", "plain_text"]) do
+        nil -> html_text
+        plain_text -> plain_text
+      end
+
     email =
       Email.new(
         data["params"]["subject"],
         data["params"]["from"],
         data["params"]["to"],
-        data["params"]["html"],
-        plain_text: data["params"]["plain_text"]
+        html_text,
+        plain_text: plain_text
       )
 
     max_delay = Map.get(data, "max_delay", 0)

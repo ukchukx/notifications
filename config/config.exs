@@ -31,8 +31,8 @@ config :cors_plug,
   methods: ["GET", "POST"]
 
 config :notifications, Notifications.Mailer,
-  adapter: Swoosh.Adapters.Sendinblue,
-  access_token: {:system, "NOTIFICATIONS_SENDINBLUE_API_KEY"}
+  adapter: Swoosh.Adapters.Sendgrid,
+  api_key: {:system, "NOTIFICATIONS_SENDGRID_API_KEY"}
 
 config :notifications,
   access_token: {:system, "NOTIFICATIONS_ACCESS_TOKEN"}

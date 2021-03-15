@@ -44,7 +44,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: notifications-secrets
-              key: sendinblueApiKey
+              key: sendgridApiKey
         - name: NOTIFICATIONS_ACCESS_TOKEN
           valueFrom:
             secretKeyRef:
