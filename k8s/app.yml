@@ -40,7 +40,7 @@ spec:
           value: 'notifications.moview.com.ng'
         - name: NOTIFICATIONS_PORT
           value: '4000'
-        - name: NOTIFICATIONS_SENDINBLUE_API_KEY
+        - name: NOTIFICATIONS_SENDGRID_API_KEY
           valueFrom:
             secretKeyRef:
               name: notifications-secrets
